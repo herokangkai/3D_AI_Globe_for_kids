@@ -1,0 +1,85 @@
+#!/bin/bash
+
+# 配置变量
+REMOTE_HOST="your-server-host"
+REMOTE_USER="your-username"
+REMOTE_PATH="/path/to/deployment"
+PROJECT_NAME="3D_AI_Globe_for_kids"
+
+# 颜色输出函数
+print_green() {
+    echo -e "\e[32m$1\e[0m"
+}
+
+print_yellow() {
+    echo -e "\e[33m$1\e[0m"
+}
+
+print_red() {
+    echo -e "\e[31m$1\e[0m"
+}
+
+# 开始部署
+print_green "开始部署 $PROJECT_NAME..."
+
+# 检查环境文件
+if [ ! -f "server/.env" ]; then
+    print_red "错误: server/.env 文件不存在"
+    print_yellow "请复制 .env.example 到 .env 并配置正确的环境变量"
+    exit 1
+fi
+
+# 构建项目
+print_yellow "正在构建项目..."
+npm run build
+
+# 压缩项目文件
+print_yellow "正在压缩项目文件..."
+tar -czf dist.tar.gz \
+    --exclude='node_modules' \
+    --exclude='.git' \
+    --exclude='.env' \
+    --exclude='*.log' \
+    .
+
+# 上传到服务器
+print_yellow "正在上传到服务器..."
+scp dist.tar.gz $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH/
+
+# 在服务器上执行部署命令
+print_yellow "正在服务器上部署..."
+ssh $REMOTE_USER@$REMOTE_HOST << EOF
+    cd $REMOTE_PATH
+    
+    # 备份当前版本
+    if [ -d "$PROJECT_NAME" ]; then
+        mv $PROJECT_NAME ${PROJECT_NAME}_backup_\$(date +%Y%m%d_%H%M%S)
+    fi
+    
+    # 解压新版本
+    mkdir $PROJECT_NAME
+    tar -xzf dist.tar.gz -C $PROJECT_NAME
+    rm dist.tar.gz
+    
+    # 安装依赖
+    cd $PROJECT_NAME/server
+    npm install --production
+    
+    # 重启服务
+    pm2 restart $PROJECT_NAME || pm2 start server.js --name $PROJECT_NAME
+EOF
+
+# 清理本地文件
+print_yellow "正在清理本地文件..."
+rm dist.tar.gz
+
+print_green "部署完成！"
+
+# 显示部署后的提示信息
+print_yellow "
+部署后检查清单：
+1. 确认服务是否正常运行：pm2 status
+2. 检查日志是否有错误：pm2 logs $PROJECT_NAME
+3. 验证 API 是否可访问
+4. 检查数据库连接是否正常
+" 
