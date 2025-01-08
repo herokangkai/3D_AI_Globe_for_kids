@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="full-screen" content="yes">
+    <title>ZaiZai Globe</title>
+    <link rel="icon" href="data:,">
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+            "three/examples/jsm/controls/OrbitControls": "https://unpkg.com/three@0.128.0/examples/jsm/controls/OrbitControls.js"
+        }
+    }
+    </script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/topojson-client@3"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        window.ENV = {
+            API_BASE_URL: '<%- API_BASE_URL %>'
+        };
+    </script>
+</head>
+<body>
+    <div id="map-container"></div>
+    <div id="info-panel" style="display: none;">
+       
+        <h2 id="country-name"></h2>
+        <div class="section">
+            <h3>基本信息</h3>
+            <p>首都：<span id="capital"></span></p>
+            <p>人口：<span id="population"></span></p>
+            <p>面积：<span id="area"></span></p>
+            <button id="edit-button" class="edit-btn">重新编辑</button>
+        </div>
+        <div class="section">
+            <h3>国旗</h3>
+            <div class="image-container flag">
+                <img class="flag" alt="国旗">
+            </div>
+        </div>
+        <div class="section">
+            <h3>货币</h3>
+            <div class="image-container currency">
+                <img class="currency-image" alt="货币">
+            </div>
+            <p class="currency-description"></p>
+        </div>
+        <div class="section">
+            <h3>代表动物</h3>
+            <div class="image-container animal">
+                <img class="animal-image" alt="代表动物">
+            </div>
+            <p class="animal-description"></p>
+        </div>
+    </div>
+    <div id="edit-panel" class="panel" style="display: none;">
+        <div class="edit-header">
+            <h2>编辑国家信息</h2>
+        </div>
+        <div class="edit-content">
+            <div class="basic-info">
+                <label for="edit-name">国家名称：</label>
+                <input type="text" id="edit-name" required>
+                
+                <label for="edit-capital">首都：</label>
+                <input type="text" id="edit-capital">
+                
+                <label for="edit-population">人口：</label>
+                <input type="text" id="edit-population">
+                
+                <label for="edit-area">面积：</label>
+                <input type="text" id="edit-area">
+                
+                <button onclick="generateBasicInfo()">AI生成基本信息</button>
+            </div>
+
+            <div class="image-section">
+                <h3>国旗</h3>
+                <div class="preview flag-preview"></div>
+                <input type="file" id="flag-upload" accept="image/*">
+            </div>
+
+            <div class="image-section">
+                <h3>货币</h3>
+                <div class="preview currency-preview"></div>
+                <p class="currency-description description"></p>
+                <button onclick="generateImage('currency')">AI生成货币图片</button>
+            </div>
+
+            <div class="image-section">
+                <h3>代表动物</h3>
+                <div class="preview animal-preview"></div>
+                <p class="animal-description description"></p>
+                <button onclick="generateImage('animal')">AI生成动物图片</button>
+            </div>
+
+            <div class="button-group">
+                <button onclick="saveCountryData()">保存</button>
+                <button onclick="cancelEdit()">取消</button>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,353 @@
+#map-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    touch-action: none;
+}
+
+#info-panel {
+    position: fixed;
+    left: 20px;
+    top: 20px;
+    width: 140px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-height: 80vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    font-size: 12px;
+}
+
+#edit-panel {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    width: 12.5%;
+    min-width: 125px;
+    max-width: 175px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    font-size: 12px;
+    cursor: move;
+}
+
+.close-button {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    background: none;
+    border: none;
+    font-size: 12px;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-button:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.image-upload {
+    margin: 10px 0;
+}
+
+.preview {
+    width: 100%;
+    height: 100px;
+    border: 1px dashed #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    overflow: hidden;
+}
+
+.preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.ai-generate-btn {
+    width: 100%;
+    padding: 8px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px 0;
+    font-size: 12px;
+}
+
+.ai-generate-btn:hover {
+    background: #45a049;
+}
+
+.ai-generate-btn:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.button-group button {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.button-group button:first-child {
+    background: #4CAF50;
+    color: white;
+}
+
+.button-group button:last-child {
+    background: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #666;
+}
+
+.loading::after {
+    content: "生成中...";
+    display: inline-block;
+    animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+    0%, 20% { content: "生成中"; }
+    40% { content: "生成中."; }
+    60% { content: "生成中.."; }
+    80%, 100% { content: "生成中..."; }
+}
+
+/* 添加错误状态样式 */
+.error {
+    color: #ff0000;
+    padding: 10px;
+    text-align: center;
+    background: rgba(255, 0, 0, 0.1);
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+/* 文字样式 */
+h2 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+h3 {
+    font-size: 12px;
+    margin: 8px 0;
+    color: #444;
+}
+
+p {
+    font-size: 11px;
+    margin: 5px 0;
+    line-height: 1.3;
+}
+
+.image-container {
+    width: 100%;
+    height: auto;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-height: 100px;
+}
+
+/* 响应式设计 */
+@media screen and (max-width: 768px) {
+    #info-panel {
+        left: 10px;
+        top: auto;
+        bottom: 10px;
+        width: calc(100% - 40px);
+        max-height: 40vh;
+    }
+    
+    #edit-panel {
+        left: 10px;
+        right: 10px;
+        width: auto;
+        top: 50%;
+        transform: translateY(-50%);
+        min-width: auto;
+        max-width: none;
+    }
+}
+
+/* 滚动条样式 */
+#info-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+#info-panel::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+}
+
+#info-panel::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+#info-panel::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* 美化表单样式 */
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="file"],
+.form-group textarea {
+    width: 100%;
+    padding: 6px;
+    font-size: 11px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-group input[type="text"]:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 8px;
+    font-size: 11px;
+    margin-top: 8px;
+}
+
+button:hover {
+    background: #45a049;
+    transform: translateY(-1px);
+}
+
+/* 关闭按钮调整 */
+#close-button {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    background: none;
+    border: none;
+    font-size: 12px;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#close-button:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+/* 编辑按钮样式 */
+.edit-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    margin-top: 8px;
+    width: auto;
+}
+
+.edit-btn:hover {
+    background: #45a049;
+}
+
+/* 基本信息输入区域样式 */
+.basic-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.basic-info input {
+    width: 100%;
+    padding: 6px;
+    font-size: 11px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.basic-info input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    outline: none;
+}
+
+/* 拖拽时的样式 */
+#edit-panel.dragging {
+    opacity: 0.8;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}

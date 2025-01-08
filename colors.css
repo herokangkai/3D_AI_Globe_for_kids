@@ -1,0 +1,115 @@
+/* 用户标记颜色 */
+:root {
+    --user-red: #ff4444;
+    --user-orange: #ff8c00;
+    --user-yellow: #ffd700;
+    --user-green: #4caf50;
+    --user-cyan: #00bcd4;
+    --user-blue: #2196f3;
+    --user-purple: #9c27b0;
+}
+
+/* 编辑面板样式 */
+.edit-panel {
+    position: fixed !important;
+    right: 20px !important;
+    top: 20px !important;
+    width: 300px !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    padding: 20px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) !important;
+    z-index: 1000 !important;
+    display: none;
+}
+
+.edit-panel.visible {
+    display: block !important;
+}
+
+.color-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.color-option {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.color-option.selected {
+    border-color: #000;
+}
+
+.color-option[data-color="red"] { background-color: var(--user-red); }
+.color-option[data-color="orange"] { background-color: var(--user-orange); }
+.color-option[data-color="yellow"] { background-color: var(--user-yellow); }
+.color-option[data-color="green"] { background-color: var(--user-green); }
+.color-option[data-color="cyan"] { background-color: var(--user-cyan); }
+.color-option[data-color="blue"] { background-color: var(--user-blue); }
+.color-option[data-color="purple"] { background-color: var(--user-purple); }
+
+.edit-form select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.edit-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.edit-form button:hover {
+    background-color: #45a049;
+}
+
+/* 统计面板样式 */
+.stats-panel {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.user-stat {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.user-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.progress-bar {
+    height: 5px;
+    background-color: #f0f0f0;
+    border-radius: 2.5px;
+    margin-top: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #4CAF50;
+    border-radius: 2.5px;
+    transition: width 0.3s ease;
+}
